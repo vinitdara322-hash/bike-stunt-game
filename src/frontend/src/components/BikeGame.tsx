@@ -1,5 +1,6 @@
 import { Volume2, VolumeX } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useIsMobile } from "../hooks/use-mobile";
 import { useSoundEngine } from "../hooks/useSoundEngine";
 import GameOverlay from "./GameOverlay";
 
@@ -522,6 +523,7 @@ export default function BikeGame() {
 
   const [gameEndData, setGameEndData] = useState<GameEndData | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
+  const isMobile = useIsMobile();
 
   // Sound engine
   const {
@@ -1658,6 +1660,234 @@ export default function BikeGame() {
       >
         {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
       </button>
+
+      {/* Mobile touch controls */}
+      {isMobile && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 20,
+          }}
+        >
+          {/* ── Left column: BACK FLIP (above) + BRAKE (below) ── */}
+
+          {/* Back Flip button */}
+          <button
+            type="button"
+            data-ocid="game.backflip_button"
+            aria-label="Back Flip"
+            style={{
+              position: "absolute",
+              bottom: 120,
+              left: 20,
+              width: 88,
+              height: 88,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+              background: "rgba(0,0,0,0.55)",
+              border: "2px solid rgba(255,0,255,0.6)",
+              borderRadius: 12,
+              cursor: "pointer",
+              color: "#ff66ff",
+              fontSize: 22,
+              fontFamily: "'Geist Mono', monospace",
+              fontWeight: "bold",
+              boxShadow:
+                "0 0 14px rgba(255,0,255,0.4), inset 0 0 8px rgba(255,0,255,0.1)",
+              touchAction: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              pointerEvents: "auto",
+              transition: "box-shadow 0.1s, background 0.1s",
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              keysRef.current.left = true;
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              keysRef.current.left = false;
+            }}
+            onMouseDown={() => {
+              keysRef.current.left = true;
+            }}
+            onMouseUp={() => {
+              keysRef.current.left = false;
+            }}
+            onMouseLeave={() => {
+              keysRef.current.left = false;
+            }}
+          >
+            <span style={{ fontSize: 24 }}>↺</span>
+          </button>
+
+          {/* Brake button */}
+          <button
+            type="button"
+            data-ocid="game.brake_button"
+            aria-label="Brake"
+            style={{
+              position: "absolute",
+              bottom: 20,
+              left: 20,
+              width: 88,
+              height: 88,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+              background: "rgba(0,0,0,0.55)",
+              border: "2px solid rgba(255,60,60,0.65)",
+              borderRadius: 12,
+              cursor: "pointer",
+              color: "#ff6060",
+              fontSize: 22,
+              fontFamily: "'Geist Mono', monospace",
+              fontWeight: "bold",
+              boxShadow:
+                "0 0 14px rgba(255,60,60,0.4), inset 0 0 8px rgba(255,60,60,0.1)",
+              touchAction: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              pointerEvents: "auto",
+              transition: "box-shadow 0.1s, background 0.1s",
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              keysRef.current.down = true;
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              keysRef.current.down = false;
+            }}
+            onMouseDown={() => {
+              keysRef.current.down = true;
+            }}
+            onMouseUp={() => {
+              keysRef.current.down = false;
+            }}
+            onMouseLeave={() => {
+              keysRef.current.down = false;
+            }}
+          >
+            <span style={{ fontSize: 24 }}>▼</span>
+          </button>
+
+          {/* ── Right column: FRONT FLIP (above) + GAS (below) ── */}
+
+          {/* Front Flip button */}
+          <button
+            type="button"
+            data-ocid="game.frontflip_button"
+            aria-label="Front Flip"
+            style={{
+              position: "absolute",
+              bottom: 120,
+              right: 20,
+              width: 88,
+              height: 88,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+              background: "rgba(0,0,0,0.55)",
+              border: "2px solid rgba(0,255,255,0.6)",
+              borderRadius: 12,
+              cursor: "pointer",
+              color: "#00ffff",
+              fontSize: 22,
+              fontFamily: "'Geist Mono', monospace",
+              fontWeight: "bold",
+              boxShadow:
+                "0 0 14px rgba(0,255,255,0.4), inset 0 0 8px rgba(0,255,255,0.1)",
+              touchAction: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              pointerEvents: "auto",
+              transition: "box-shadow 0.1s, background 0.1s",
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              keysRef.current.right = true;
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              keysRef.current.right = false;
+            }}
+            onMouseDown={() => {
+              keysRef.current.right = true;
+            }}
+            onMouseUp={() => {
+              keysRef.current.right = false;
+            }}
+            onMouseLeave={() => {
+              keysRef.current.right = false;
+            }}
+          >
+            <span style={{ fontSize: 24 }}>↻</span>
+          </button>
+
+          {/* Gas / Accelerate button */}
+          <button
+            type="button"
+            data-ocid="game.accelerate_button"
+            aria-label="Accelerate"
+            style={{
+              position: "absolute",
+              bottom: 20,
+              right: 20,
+              width: 88,
+              height: 88,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+              background: "rgba(0,0,0,0.55)",
+              border: "2px solid rgba(57,255,20,0.65)",
+              borderRadius: 12,
+              cursor: "pointer",
+              color: "#39ff14",
+              fontSize: 22,
+              fontFamily: "'Geist Mono', monospace",
+              fontWeight: "bold",
+              boxShadow:
+                "0 0 14px rgba(57,255,20,0.45), inset 0 0 8px rgba(57,255,20,0.1)",
+              touchAction: "none",
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              pointerEvents: "auto",
+              transition: "box-shadow 0.1s, background 0.1s",
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              keysRef.current.up = true;
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              keysRef.current.up = false;
+            }}
+            onMouseDown={() => {
+              keysRef.current.up = true;
+            }}
+            onMouseUp={() => {
+              keysRef.current.up = false;
+            }}
+            onMouseLeave={() => {
+              keysRef.current.up = false;
+            }}
+          >
+            <span style={{ fontSize: 24 }}>▲</span>
+          </button>
+        </div>
+      )}
 
       {showOverlay && gameEndData && (
         <GameOverlay gameEndData={gameEndData} onRestart={handleRestart} />
