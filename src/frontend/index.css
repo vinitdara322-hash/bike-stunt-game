@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque[opsz,wdth,wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Neon dark theme - game-first palette */
+    --background: 0.08 0.015 280;
+    --foreground: 0.95 0.02 200;
+    --card: 0.12 0.02 280;
+    --card-foreground: 0.95 0.02 200;
+    --popover: 0.1 0.02 280;
+    --popover-foreground: 0.95 0.02 200;
+    --primary: 0.85 0.22 180;
+    --primary-foreground: 0.08 0.015 280;
+    --secondary: 0.15 0.03 280;
+    --secondary-foreground: 0.85 0.22 180;
+    --muted: 0.18 0.02 280;
+    --muted-foreground: 0.6 0.05 200;
+    --accent: 0.75 0.3 300;
+    --accent-foreground: 0.08 0.015 280;
+    --destructive: 0.65 0.28 25;
+    --destructive-foreground: 0.95 0.02 200;
+    --border: 0.25 0.04 280;
+    --input: 0.18 0.03 280;
+    --ring: 0.85 0.22 180;
+    --chart-1: 0.85 0.22 180;
+    --chart-2: 0.75 0.3 300;
+    --chart-3: 0.9 0.25 100;
+    --chart-4: 0.7 0.25 25;
+    --chart-5: 0.65 0.22 150;
+    --sidebar: 0.1 0.02 280;
+    --sidebar-foreground: 0.95 0.02 200;
+    --sidebar-primary: 0.85 0.22 180;
+    --sidebar-primary-foreground: 0.08 0.015 280;
+    --sidebar-accent: 0.75 0.3 300;
+    --sidebar-accent-foreground: 0.08 0.015 280;
+    --sidebar-border: 0.25 0.04 280;
+    --sidebar-ring: 0.85 0.22 180;
+
+    /* Game-specific neon colors as CSS vars for use in UI overlays */
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --neon-green: #39ff14;
+    --neon-yellow: #ffff00;
+    --neon-orange: #ff6600;
+    --neon-white: #e0f8ff;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0a0f;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Neon text glow utilities */
+.neon-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+}
+
+.neon-green {
+  color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+}
+
+.neon-magenta {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta), 0 0 40px var(--neon-magenta);
+}
+
+.neon-yellow {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-yellow);
+}
+
+.game-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.mono {
+  font-family: "Geist Mono", monospace;
+}
+
+/* Game overlay animations */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes slide-in-down {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-in-down {
+  animation: slide-in-down 0.3s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ffff44;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ffff88;
+}
